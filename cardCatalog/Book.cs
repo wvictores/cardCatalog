@@ -12,5 +12,6 @@ namespace cardCatalog
         public string firstName { get; set; }
         public string title { get; set; }
         public string longISBN { get; set; }
+        public string publishYear { get; set; }
     }
 }
