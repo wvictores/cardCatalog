@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace cardCatalog
 {
-    class Program
+    class Catalog
     {
         static void Main(string[] args)
         {
