@@ -36,10 +36,28 @@ namespace cardCatalog
 
                 }
                 */
-            } while (!finished);
+                while (!finished) ;
 
+                switch (choice)
 
-            }
+                {
+
+                    case "1": // Do Something
+
+                        break;
+
+                    case "2": //Do that
+
+                        break;
+
+                    case "3": //Do that
+
+                        break;
+                    case "4": (!finished) 
+
+                        break;
+
+                }
 
         }  // Main
 
