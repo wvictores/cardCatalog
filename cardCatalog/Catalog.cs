@@ -15,7 +15,7 @@ namespace cardCatalog
         private string _filename = "books.xml";
         static void Main(string[] args)
         {
-           // var books = new List<Book>;
+            // var books = new List<Book>;
 
 
             bool finished = false;
@@ -34,10 +34,43 @@ namespace cardCatalog
 
                 }
                 */
-            } while (!finished);
+                while (!finished) ;
 
+                switch (choice)
+
+                {
+
+                    case "1": // Do Something
+
+                        break;
+
+                    case "2": //Do that
+
+                        break;
+
+                    case "3": //Do that
+
+                        break;
+                    case "4": (!finished) 
+
+                        break;
+
+                }
+
+            } while (choice != "0")
+
+
+
+
+              /*  Book 1 = new Book();
+            1.lastName = "Atwood";
+            1.firstName = "Margaret";
+            1.longISBN = "5882300312";
+            1.PublishYear = "2007";
+            Console.WriteLine();
+            Console.ReadLine();
 
             }
-
+            */
     }
-    }
+}
