@@ -63,8 +63,7 @@ namespace cardCatalog
                         Write("Year published: ");
                         string pubYear = ReadLine();
 
-                        Book newBook = Book(lastName, firstName, title, isbn, 
-                            pubYear);
+                        books.Add(Book(lastName, firstName, title, isbn, pubYear));
 
                         break;
 
