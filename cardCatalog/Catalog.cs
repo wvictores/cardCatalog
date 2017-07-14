@@ -14,7 +14,6 @@ namespace cardCatalog
     {
         public enum options { list = 1, add, save }
         private static List<Book> books = new List<Book>();
-        //private static List<Book> books;
         private static string _filename;
         static void Main(string[] args)
         {
@@ -34,17 +33,14 @@ namespace cardCatalog
                 WriteLine("Exit (4)");
                 Write("Enter your choice: ");
                 string choice = ReadLine();
-                /* foreach (options item in Enum.GetValues(typeof(options)))
-                {
 
-                }
-                */
-
-                switch (choice)
+S                switch (choice)
 
                 {
 
                     case "1": // List all the books.
+                        WriteLine("Catalog");
+                        WriteLine("=======");
                         foreach (Book book in books)
                         {
                             book.PrintBookInfo();
