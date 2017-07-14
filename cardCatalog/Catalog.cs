@@ -70,7 +70,14 @@ namespace cardCatalog
             Console.WriteLine();
             Console.ReadLine();
 
+            Console.WriteLine("Enter a Last Name: ");
+            String lastName;
+            lastName = Console.ReadLine();
+            Console.WriteLine("Enter a First Name: ");
+            String firstName;
+            Console.WriteLine("Enter a long ISBN: ");
+            string ISBN;
             }
             */
     }
-}
+    }
