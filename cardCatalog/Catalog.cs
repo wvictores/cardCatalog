@@ -13,8 +13,8 @@ namespace cardCatalog
     class Catalog
     {
         public enum options { list = 1, add, save }
-        // List<Book> books = new List<Book>();
-        private static List<Book> books;
+        private static List<Book> books = new List<Book>();
+        //private static List<Book> books;
         private static string _filename;
         static void Main(string[] args)
         {
