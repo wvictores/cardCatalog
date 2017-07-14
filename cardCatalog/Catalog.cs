@@ -106,6 +106,7 @@ namespace cardCatalog
                 + $"XML to {xmlFilepath}");
             WriteLine();
 
-            WriteLine(File.ReadAllText(xmlFilepath));
-        }
+            }
+            */
     }
+}
