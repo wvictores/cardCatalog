@@ -52,6 +52,11 @@ namespace cardCatalog
             this.longISBN = isbn;
             this.publishYear = pubYear;
         }
+
+        pubic void PrintBookInfo() 
+        {
+
+        }                                   
     } // class Book
 
 }
