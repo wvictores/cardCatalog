@@ -22,7 +22,7 @@ namespace cardCatalog
          * 1) N. S. Clerman, 14-Jul-2017: Add a constructor (required for XML
          *    Serialization). Add the XmlAttribute to all the properties (this 
          *    makes the XML more efficient). using System.Xml.Serialization to
-         *    accomplish this.
+         *    accomplish this. Add a second constructor with parameters.S
          */
 
         // properties
@@ -40,11 +40,11 @@ namespace cardCatalog
         // constructor
         // this must be present for XML Serialization
         // it also must be parameter-less (but it can be overloaded)
-        public Book() {}
+        public Book() { }
 
         // overload of constructor
         public Book(string lastName, string firstName, string title, string isbn,
-            string pubYear) 
+            string pubYear)
         {
             this.lastName = lastName;
             this.firstName = firstName;
@@ -53,14 +53,19 @@ namespace cardCatalog
             this.publishYear = pubYear;
         }
 
-        public  void PrintBookInfo() 
+        public void PrintBookInfo()
         {
+            /*
+             * Purpose: Print the book info.
+             * 
+             * Programmer: N. S. Clerman, 14-Jul-2017
+             */
             WriteLine($"Author: {this.lastName}, {this.firstName}");
             WriteLine($"Title: {this.title}");
             WriteLine($"ISBN: {this.longISBN}");
             WriteLine($"Year published: {this.publishYear}");
             WriteLine();
-        }                                   
+        }
     } // class Book
 
 }

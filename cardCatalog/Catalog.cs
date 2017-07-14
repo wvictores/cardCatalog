@@ -14,12 +14,9 @@ namespace cardCatalog
     {
         public enum options { list = 1, add, save }
         private static List<Book> books = new List<Book>();
-        //private static List<Book> books;
         private static string _filename;
         static void Main(string[] args)
         {
-            // var books = new List<Book>;
-
             bool finished = false;
             WriteLine("Welcome to the card catalog");
             WriteLine();
@@ -34,25 +31,18 @@ namespace cardCatalog
                 WriteLine("Exit (4)");
                 Write("Enter your choice: ");
                 string choice = ReadLine();
-                /* foreach (options item in Enum.GetValues(typeof(options)))
-                {
-
-                }
-                */
 
                 switch (choice)
 
                 {
 
                     case "1": // List all the books.
+                        WriteLine("Catalog");
+                        WriteLine("=======");
                         foreach (Book book in books)
-
-                            
-                            {
-
-                                Console.WriteLine(Books ());;
-                            } 
-                        
+                        {
+                            book.PrintBookInfo();
+                        }
                         break;
 
                     case "2": // Add a book.
@@ -72,7 +62,6 @@ namespace cardCatalog
                         Book nextBook = new Book(lName, fName, tit, number,
                             year);
                         books.Add(nextBook);
-
                         break;
 
                     case "3": // Save
@@ -81,12 +70,12 @@ namespace cardCatalog
                     case "4":
                         finished = true;
                         break;
-                 }
-             } while (!finished) ;
+                }
+            } while (!finished);
 
         }  // Main
 
-        public void Save ()
+        public void Save()
         {
             /*
              * Purpose: Write the books List as an XML file.
@@ -96,7 +85,7 @@ namespace cardCatalog
              * Note: This code was taken from the following book:
              *       "C#7 and .NET Core: Modern Cross-Platform Development"
              *       Mark J. Price, Second Edition, Packt> Publishing 2017.
-             */ 
+             */
             /* 
              * 1) establish a filestream on which to write the XML file 
              *    containing the books list.
@@ -114,6 +103,6 @@ namespace cardCatalog
                 + $"XML to {xmlFilepath}");
             WriteLine();
 
-            }
+        }
     }
 }
