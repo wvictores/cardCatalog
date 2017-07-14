@@ -53,7 +53,7 @@ namespace cardCatalog
             this.publishYear = pubYear;
         }
 
-        public void PrintBookInfo() 
+        public  void PrintBookInfo() 
         {
             WriteLine($"Author: {this.lastName}, {this.firstName}");
             WriteLine($"Title: {this.title}");

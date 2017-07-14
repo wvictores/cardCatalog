@@ -46,9 +46,13 @@ namespace cardCatalog
 
                     case "1": // List all the books.
                         foreach (Book book in books)
-                        {
-                            book.PrintBookInfo();
-                        }
+
+                            
+                            {
+
+                                Console.WriteLine(Books ());;
+                            } 
+                        
                         break;
 
                     case "2": // Add a book.
