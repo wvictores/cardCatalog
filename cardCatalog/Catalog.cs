@@ -71,11 +71,11 @@ namespace cardCatalog
 
                         break;
 
-                    case "3": //Do that
+                    case "3": // Save
 
                         break;
                     case "4":
-                        finished = false;
+                        finished = true;
                         break;
                  }
              } while (!finished) ;
