@@ -12,8 +12,12 @@ namespace cardCatalog
     {
         public enum options { list = 1, add, save }
         private List<Book> books;
+        private string _filename = "books.xml";
         static void Main(string[] args)
         {
+           // var books = new List<Book>;
+
+
             bool finished = false;
             WriteLine("Welcome to the card catalog");
             do
