@@ -17,8 +17,6 @@ namespace cardCatalog
         private static string _filename;
         static void Main(string[] args)
         {
-            // var books = new List<Book>;
-
             bool finished = false;
             WriteLine("Welcome to the card catalog");
             WriteLine();
@@ -34,7 +32,7 @@ namespace cardCatalog
                 Write("Enter your choice: ");
                 string choice = ReadLine();
 
-S                switch (choice)
+               switch (choice)
 
                 {
 
@@ -42,13 +40,9 @@ S                switch (choice)
                         WriteLine("Catalog");
                         WriteLine("=======");
                         foreach (Book book in books)
-
-                            
-                            {
-
-                                Console.WriteLine(Books ());;
-                            } 
-                        
+                        {
+                            book.PrintBookInfo();                        
+                        } 
                         break;
 
                     case "2": // Add a book.
@@ -68,7 +62,6 @@ S                switch (choice)
                         Book nextBook = new Book(lName, fName, tit, number,
                             year);
                         books.Add(nextBook);
-
                         break;
 
                     case "3": // Save
