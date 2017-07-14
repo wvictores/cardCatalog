@@ -53,9 +53,13 @@ namespace cardCatalog
             this.publishYear = pubYear;
         }
 
-        pubic void PrintBookInfo() 
+        public void PrintBookInfo() 
         {
-
+            WriteLine($"Author: {this.lastName}, {this.firstName}");
+            WriteLine($"Title: {this.title}");
+            WriteLine($"ISBN: {this.longISBN}");
+            WriteLine($"Year published: {this.publishYear}");
+            WriteLine();
         }                                   
     } // class Book
 

@@ -13,18 +13,18 @@ namespace cardCatalog
     class Catalog
     {
         public enum options { list = 1, add, save }
-        private List<Book> books;
-        private string _filename;
+        // List<Book> books = new List<Book>();
+        private static List<Book> books;
+        private static string _filename;
         static void Main(string[] args)
         {
             // var books = new List<Book>;
-
 
             bool finished = false;
             WriteLine("Welcome to the card catalog");
             WriteLine();
             Write("Please enter the catalog filename: ");
-            _filename = ReadLine();
+            string _filename = ReadLine();
             do
             {
                 WriteLine("What would you like to do?");
@@ -39,42 +39,46 @@ namespace cardCatalog
 
                 }
                 */
-                while (!finished) ;
 
                 switch (choice)
 
                 {
 
                     case "1": // List all the books.
-
+                        foreach (Book book in books)
+                        {
+                            book.PrintBookInfo();
+                        }
                         break;
 
                     case "2": // Add a book.
                         // Book newBook = AddABook();
                         WriteLine("Enter the book information");
                         Write("Author's last name: ");
-                        string lastName = ReadLine();
+                        string lName = ReadLine();
                         Write("Author's first name: ");
-                        string firstName = ReadLine();
+                        string fName = ReadLine();
                         Write("Title: ");
-                        string title = ReadLine();
+                        string tit = ReadLine();
                         Write("ISBN: ");
-                        string isbn = ReadLine();
+                        string number = ReadLine();
                         Write("Year published: ");
-                        string pubYear = ReadLine();
+                        string year = ReadLine();
 
-                        books.Add(Book(lastName, firstName, title, isbn, pubYear));
+                        Book nextBook = new Book(lName, fName, tit, number,
+                            year);
+                        books.Add(nextBook);
 
                         break;
 
                     case "3": //Do that
 
                         break;
-                    case "4": (!finished) 
-
+                    case "4":
+                        finished = false;
                         break;
-
-                }
+                 }
+             } while (!finished) ;
 
         }  // Main
 
@@ -107,6 +111,5 @@ namespace cardCatalog
             WriteLine();
 
             }
-            */
     }
 }
