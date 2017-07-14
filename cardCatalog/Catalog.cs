@@ -22,6 +22,22 @@ namespace cardCatalog
             WriteLine();
             Write("Please enter the catalog filename: ");
             string _filename = ReadLine().Trim() + ".xml";
+
+            // If the file already exist, read it into books
+            var xs = new XmlSerializer(typeof(List<Book>));
+            string xmlFilepath = _filename;
+            FileStream xmlStream;
+            if (File.Exists(xmlFilepath))
+            {
+                xmlStream = File.Open(xmlFilepath, FileMode.Open);
+                books = (List<Book>)xs.Deserialize(xmlStream);
+            }
+            else 
+            {
+                xmlStream = File.Create(xmlFilepath);
+            }
+
+            // prompt the user for entry.
             do
             {
                 WriteLine("What would you like to do?");
@@ -65,7 +81,7 @@ namespace cardCatalog
                         break;
 
                     case "3": // Save
-                        //Save();
+                        Catalog.Save(xmlStream, _filename);
                         break;
                     case "4":
                         finished = true;
@@ -78,7 +94,7 @@ namespace cardCatalog
 
         }  // Main
 
-        public void Save()
+        public static void Save(FileStream xmlStream, string fileName)
         {
             /*
              * Purpose: Write the books List as an XML file.
@@ -97,18 +113,14 @@ namespace cardCatalog
             */
 
             var xs = new XmlSerializer(typeof(List<Book>));
-            if (!File.Exists(_filename))
-            {
-                string xmlFilepath = _filename;
-                FileStream xmlStream = File.Create(xmlFilepath);
-                xs.Serialize(xmlStream, books);
-                xmlStream.Dispose();
+            string xmlFilepath = fileName;
+            xs.Serialize(xmlStream, books);
+            xmlStream.Dispose();
 
-                // Debugging code. to be commented out as necessary
-                WriteLine($"Written {new FileInfo(xmlFilepath).Length} bytes of "
-                    + $"XML to {xmlFilepath}");
-                WriteLine();
-            }
+            // Debugging code. to be commented out as necessary
+            WriteLine($"Written {new FileInfo(xmlFilepath).Length} bytes of "
+                + $"XML to {xmlFilepath}");
+            WriteLine();
         } // Save
     }
 }
