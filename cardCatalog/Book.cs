@@ -53,7 +53,7 @@ namespace cardCatalog
             this.publishYear = pubYear;
         }
 
-        public void PrintBookInfo() 
+        public  void PrintBookInfo() 
         {
             /*
              * Purpose: Print the book info.

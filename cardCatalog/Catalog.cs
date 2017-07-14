@@ -42,9 +42,13 @@ S                switch (choice)
                         WriteLine("Catalog");
                         WriteLine("=======");
                         foreach (Book book in books)
-                        {
-                            book.PrintBookInfo();
-                        }
+
+                            
+                            {
+
+                                Console.WriteLine(Books ());;
+                            } 
+                        
                         break;
 
                     case "2": // Add a book.
