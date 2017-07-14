@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Console;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,11 +39,19 @@ namespace cardCatalog
 
         // constructor
         // this must be present for XML Serialization
-        // it also must be parameterless
+        // it also must be parameter-less (but it can be overloaded)
         public Book() {}
 
-        //
-        private string filename;
+        // overload of constructor
+        public Book(string lastName, string firstName, string title, string isbn,
+            string pubYear) 
+        {
+            this.lastName = lastName;
+            this.firstName = firstName;
+            this.title = title;
+            this.longISBN = isbn;
+            this.publishYear = pubYear;
+        }
+    } // class Book
 
-    }
 }

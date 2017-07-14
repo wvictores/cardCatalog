@@ -14,7 +14,7 @@ namespace cardCatalog
     {
         public enum options { list = 1, add, save }
         private List<Book> books;
-        private string _filename = "books.xml";
+        private string _filename;
         static void Main(string[] args)
         {
             // var books = new List<Book>;
@@ -22,6 +22,9 @@ namespace cardCatalog
 
             bool finished = false;
             WriteLine("Welcome to the card catalog");
+            WriteLine();
+            Write("Please enter the catalog filename: ");
+            _filename = ReadLine();
             do
             {
                 WriteLine("What would you like to do?");
@@ -42,11 +45,26 @@ namespace cardCatalog
 
                 {
 
-                    case "1": // Do Something
+                    case "1": // List all the books.
 
                         break;
 
-                    case "2": //Do that
+                    case "2": // Add a book.
+                        // Book newBook = AddABook();
+                        WriteLine("Enter the book information");
+                        Write("Author's last name: ");
+                        string lastName = ReadLine();
+                        Write("Author's first name: ");
+                        string firstName = ReadLine();
+                        Write("Title: ");
+                        string title = ReadLine();
+                        Write("ISBN: ");
+                        string isbn = ReadLine();
+                        Write("Year published: ");
+                        string pubYear = ReadLine();
+
+                        Book newBook = Book(lastName, firstName, title, isbn, 
+                            pubYear);
 
                         break;
 
