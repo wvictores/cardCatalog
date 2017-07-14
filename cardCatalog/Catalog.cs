@@ -21,7 +21,7 @@ namespace cardCatalog
             WriteLine("Welcome to the card catalog");
             WriteLine();
             Write("Please enter the catalog filename: ");
-            string _filename = ReadLine();
+            string _filename = ReadLine().Trim() + ".xml";
             do
             {
                 WriteLine("What would you like to do?");
@@ -65,10 +65,13 @@ namespace cardCatalog
                         break;
 
                     case "3": // Save
-
+                        //Save();
                         break;
                     case "4":
                         finished = true;
+                        break;
+                    default:
+                        WriteLine("Invalid entry, try again.");
                         break;
                  }
              } while (!finished) ;
@@ -92,17 +95,20 @@ namespace cardCatalog
              * 2) create the serializer object and serialize the list to the file.
              * 3) close the stream to release the file lock.
             */
-            string xmlFilepath = _filename;
-            FileStream xmlStream = File.Create(xmlFilepath);
+
             var xs = new XmlSerializer(typeof(List<Book>));
-            xs.Serialize(xmlStream, books);
-            xmlStream.Dispose();
+            if (!File.Exists(_filename))
+            {
+                string xmlFilepath = _filename;
+                FileStream xmlStream = File.Create(xmlFilepath);
+                xs.Serialize(xmlStream, books);
+                xmlStream.Dispose();
 
-            // Debugging code. to be commented out as necessary
-            WriteLine($"Written {new FileInfo(xmlFilepath).Length} bytes of "
-                + $"XML to {xmlFilepath}");
-            WriteLine();
-
+                // Debugging code. to be commented out as necessary
+                WriteLine($"Written {new FileInfo(xmlFilepath).Length} bytes of "
+                    + $"XML to {xmlFilepath}");
+                WriteLine();
             }
+        } // Save
     }
 }
