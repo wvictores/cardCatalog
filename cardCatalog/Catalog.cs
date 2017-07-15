@@ -12,12 +12,23 @@ namespace cardCatalog
 
     class Catalog
     {
-        public enum options { list = 1, add, save }
         private static List<Book> books = new List<Book>();
         private static string _filename;
         static void Main(string[] args)
         {
+            /*
+             * Purpose: Main method. Setup XML file. Prompt user for operation.
+             * Invoke the appropriate procedure to perform it.
+             * 
+             * Programmers: W. Victores, N. S. Clerman, 13-Jul-2017
+             */
+
+            // MAX_TRIES - maximum number of bad entries allowed
+            // finished - flag for exit
+            const int MAX_TRIES = 4;
             bool finished = false;
+
+            // obtain the filename.
             WriteLine("Welcome to the card catalog");
             WriteLine();
             Write("Please enter the catalog filename: ");
@@ -25,17 +36,31 @@ namespace cardCatalog
 
             // If the file already exist, read it into books
             var xs = new XmlSerializer(typeof(List<Book>));
-            string xmlFilepath = _filename;
             FileStream xmlStream;
-            bool fileExisted = File.Exists(xmlFilepath);
-            xmlStream = File.Open(xmlFilepath, FileMode.OpenOrCreate);
-            if (fileExisted)
+            bool fileExists = File.Exists(_filename);
+
+            if (fileExists)
             {
-                books = (List<Book>)xs.Deserialize(xmlStream);
+                try
+                {
+                    using(xmlStream = File.OpenRead(_filename))
+                    {
+                        books = (List<Book>)xs.Deserialize(xmlStream);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    WriteLine($"Problem with {_filename}.");
+                    WriteLine($"Program reports {ex.Message}; exiting program.");
+                    WriteLine("Enter any key to exit.");
+                    ReadLine();
+                    Environment.Exit(1);
+                }
             }
-            xmlStream.Dispose();
 
             // prompt the user for entry.
+            int kountTries = 0;
+            string failMessage;
             do
             {
                 WriteLine("What would you like to do?");
@@ -56,6 +81,7 @@ namespace cardCatalog
                         {
                             book.PrintBookInfo();
                         }
+                        kountTries = 0;
                         break;
 
                     case "2": // Add a book.
@@ -75,6 +101,7 @@ namespace cardCatalog
                         Book nextBook = new Book(lName, fName, tit, number,
                             year);
                         books.Add(nextBook);
+                        kountTries = 0;
                         break;
 
                     case "3": // Save
@@ -82,7 +109,18 @@ namespace cardCatalog
                         finished = true;
                         break;
                     default:
-                        WriteLine("Invalid entry, try again.");
+                        kountTries++;
+                        finished = kountTries > MAX_TRIES;
+                        if (finished)
+                        {
+                            failMessage = "Maximum tries reached. Press <Enter> to exit.";
+                        }
+                        else
+                        {
+                            failMessage = "Invalid entry, try again.";
+                        }
+                        WriteLine(failMessage);
+                        if (finished) {ReadLine();}
                         break;
                  }
              } while (!finished) ;
@@ -96,6 +134,11 @@ namespace cardCatalog
              * 
              * Author: N. S. Clerman, 14-Jul-2017
              * 
+             * Revisions
+             * =========
+             * 1) N. S. Clerman, 15-Jul-2017: Add some exception handling.
+             *    Remove some debugging code.
+             * 
              * Note: This code was taken from the following book:
              *       "C#7 and .NET Core: Modern Cross-Platform Development"
              *       Mark J. Price, Second Edition, Packt> Publishing 2017.
@@ -107,16 +150,22 @@ namespace cardCatalog
              * 3) close the stream to release the file lock.
             */
 
-            var xs = new XmlSerializer(typeof(List<Book>));
-            string xmlFilepath = fileName;
-            FileStream xmlStream = File.OpenWrite(xmlFilepath);
-            xs.Serialize(xmlStream, books);
-            xmlStream.Dispose();
-
-            // Debugging code. to be commented out as necessary
-            WriteLine($"Written {new FileInfo(xmlFilepath).Length} bytes of "
-                + $"XML to {xmlFilepath}");
-            WriteLine();
+            try
+            {
+                var xs = new XmlSerializer(typeof(List<Book>));
+                using(FileStream xmlStream = File.OpenWrite(fileName))
+                {
+                    xs.Serialize(xmlStream, books);
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLine($"Problem with {fileName}.");
+                WriteLine($"Program reports {ex.Message}; exiting program.");
+                WriteLine("Enter any key to exit.");
+                ReadLine();
+                Environment.Exit(1);
+            }
         } // Save
     }
 }

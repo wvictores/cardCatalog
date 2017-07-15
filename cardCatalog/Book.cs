@@ -19,10 +19,10 @@ namespace cardCatalog
          * 
          * Revisions
          * =========
-         * 1) N. S. Clerman, 14-Jul-2017: Add a constructor (required for XML
-         *    Serialization). Add the XmlAttribute to all the properties (this 
-         *    makes the XML more efficient). using System.Xml.Serialization to
-         *    accomplish this. Add a second constructor with parameters.S
+         * 1) N. S. Clerman, 14-Jul-2017: Add a parameter-less constructor (required for XML
+         *    Serialization). Add the XmlAttribute to all the properties (this makes the XML 
+         *    more efficient), using System.Xml.Serialization to accomplish this. Add a 
+         *    second constructor with parameters.
          */
 
         // properties
