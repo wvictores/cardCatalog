@@ -27,15 +27,13 @@ namespace cardCatalog
             var xs = new XmlSerializer(typeof(List<Book>));
             string xmlFilepath = _filename;
             FileStream xmlStream;
-            if (File.Exists(xmlFilepath))
+            bool fileExisted = File.Exists(xmlFilepath);
+            xmlStream = File.Open(xmlFilepath, FileMode.OpenOrCreate);
+            if (fileExisted)
             {
-                xmlStream = File.Open(xmlFilepath, FileMode.Open);
                 books = (List<Book>)xs.Deserialize(xmlStream);
             }
-            else 
-            {
-                xmlStream = File.Create(xmlFilepath);
-            }
+            xmlStream.Dispose();
 
             // prompt the user for entry.
             do
@@ -43,8 +41,7 @@ namespace cardCatalog
                 WriteLine("What would you like to do?");
                 WriteLine("List Books(1)");
                 WriteLine("Add a Book(2)");
-                WriteLine("Save to File(3)");
-                WriteLine("Exit (4)");
+                WriteLine("Save to File and Exit(3)");
                 Write("Enter your choice: ");
                 string choice = ReadLine();
 
@@ -81,9 +78,7 @@ namespace cardCatalog
                         break;
 
                     case "3": // Save
-                        Catalog.Save(xmlStream, _filename);
-                        break;
-                    case "4":
+                        Catalog.Save(_filename);
                         finished = true;
                         break;
                     default:
@@ -94,7 +89,7 @@ namespace cardCatalog
 
         }  // Main
 
-        public static void Save(FileStream xmlStream, string fileName)
+        public static void Save(string fileName)
         {
             /*
              * Purpose: Write the books List as an XML file.
@@ -114,6 +109,7 @@ namespace cardCatalog
 
             var xs = new XmlSerializer(typeof(List<Book>));
             string xmlFilepath = fileName;
+            FileStream xmlStream = File.OpenWrite(xmlFilepath);
             xs.Serialize(xmlStream, books);
             xmlStream.Dispose();
 
