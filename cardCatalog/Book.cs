@@ -53,13 +53,18 @@ namespace cardCatalog
             this.publishYear = pubYear;
         }
 
-        public void PrintBookInfo()
+        /// <summary>
+        /// Purpose: Print the book info.
+        ///
+        /// Programmer: N. S. Clerman, 14-Jul-2017
+        /// 
+        /// Revisions
+        /// =========
+        /// 1) N. S. Clerman, 18-Jul-2017: Change the method name, overloading
+        ///    the ToString() method.
+        /// </summary>
+        public new void ToString()
         {
-            /*
-             * Purpose: Print the book info.
-             * 
-             * Programmer: N. S. Clerman, 14-Jul-2017
-             */
             WriteLine($"Author: {this.lastName}, {this.firstName}");
             WriteLine($"Title: {this.title}");
             WriteLine($"ISBN: {this.longISBN}");

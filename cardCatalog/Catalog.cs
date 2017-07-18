@@ -10,18 +10,33 @@ using System.IO;
 namespace cardCatalog
 {
 
+    /// <summary>
+    /// Purpose: Class for the card catalog
+    /// 
+    /// Programmers: W. Victores, N. S. Clerman, 13-Jul-2017
+    /// 
+    /// Revisions
+    /// =========
+    /// 1) N. S. Clerman, 18-Jul-2017: Remove static variable _filename.
+    /// </summary>
     class Catalog
     {
+        // books - container for the list of books        
         private static List<Book> books = new List<Book>();
-        private static string _filename;
+        /// <summary>
+        /// Purpose: Main method. Setup XML file. Prompt user for operation.
+        /// Invoke the appropriate procedure to perform it.
+        ///
+        /// Programmers: W. Victores, N. S. Clerman, 13-Jul-2017
+        /// 
+        /// Revisions
+        /// =========
+        /// 1) N. S. Clerman, 18-Jul-2017: Modify the call to PrintBookInfo to
+        ///    ToString().
+        /// </summary>
+        /// <param name="args">Command Line Arguments</param>
         static void Main(string[] args)
         {
-            /*
-             * Purpose: Main method. Setup XML file. Prompt user for operation.
-             * Invoke the appropriate procedure to perform it.
-             * 
-             * Programmers: W. Victores, N. S. Clerman, 13-Jul-2017
-             */
 
             // MAX_TRIES - maximum number of bad entries allowed
             // finished - flag for exit
@@ -79,7 +94,7 @@ namespace cardCatalog
                         WriteLine("=======");
                         foreach (Book book in books)
                         {
-                            book.PrintBookInfo();
+                            book.ToString();
                         }
                         kountTries = 0;
                         break;
