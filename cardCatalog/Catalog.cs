@@ -33,6 +33,10 @@ namespace cardCatalog
         /// =========
         /// 1) N. S. Clerman, 18-Jul-2017: Modify the call to PrintBookInfo to
         ///    ToString().
+        /// 2) N. S. Clerman, 21-Jul-2017: Separate out the code to list the
+        ///    books to a separate static method, ListBooks; and the code to
+        ///    add a book to one, AddABook, also. Remove the try for opening an
+        ///    existing catalog - just let the exception appear.
         /// </summary>
         /// <param name="args">Command Line Arguments</param>
         static void Main(string[] args)
@@ -56,20 +60,9 @@ namespace cardCatalog
 
             if (fileExists)
             {
-                try
+                using(xmlStream = File.OpenRead(_filename))
                 {
-                    using(xmlStream = File.OpenRead(_filename))
-                    {
-                        books = (List<Book>)xs.Deserialize(xmlStream);
-                    }
-                }
-                catch(Exception ex)
-                {
-                    WriteLine($"Problem with {_filename}.");
-                    WriteLine($"Program reports {ex.Message}; exiting program.");
-                    WriteLine("Enter any key to exit.");
-                    ReadLine();
-                    Environment.Exit(1);
+                    books = (List<Book>)xs.Deserialize(xmlStream);
                 }
             }
 
@@ -86,39 +79,22 @@ namespace cardCatalog
                 string choice = ReadLine();
 
                 switch (choice)
-
                 {
-
                     case "1": // List all the books.
-                        WriteLine("Catalog");
-                        WriteLine("=======");
-                        foreach (Book book in books)
+                        if (books.Count > 0)
                         {
-                            book.ToString();
+                            Catalog.ListBooks();
+                        }
+                        else
+                        {
+                            WriteLine("The catalog is empty.");
                         }
                         kountTries = 0;
                         break;
-
                     case "2": // Add a book.
-                        // Book newBook = AddABook();
-                        WriteLine("Enter the book information");
-                        Write("Author's last name: ");
-                        string lName = ReadLine();
-                        Write("Author's first name: ");
-                        string fName = ReadLine();
-                        Write("Title: ");
-                        string tit = ReadLine();
-                        Write("ISBN: ");
-                        string number = ReadLine();
-                        Write("Year published: ");
-                        string year = ReadLine();
-
-                        Book nextBook = new Book(lName, fName, tit, number,
-                            year);
-                        books.Add(nextBook);
+                        Catalog.AddABook();
                         kountTries = 0;
                         break;
-
                     case "3": // Save
                         Catalog.Save(_filename);
                         finished = true;
@@ -142,27 +118,29 @@ namespace cardCatalog
 
         }  // Main
 
+        /// <summary>
+        /// 
+        /// Purpose: Write the books List as an XML file.
+        /// 
+        /// Author: N. S. Clerman, 14-Jul-2017
+        /// 
+        /// Revisions
+        /// =========
+        /// 1) N. S. Clerman, 15-Jul-2017: Add some exception handling.
+        ///    Remove some debugging code.
+        /// 2) N. S. Clerman, 19-Jul-2017: Re-document the code using <summmary>.
+        /// 
+        /// Note: This code was taken from the following book:
+        ///       "C#7 and .NET Core: Modern Cross-Platform Development"
+        ///       Mark J. Price, Second Edition, Packt> Publishing 2017.
+        /// </summary>
+        /// <param name="fileName">Name of File (without extension)</param>
         public static void Save(string fileName)
         {
-            /*
-             * Purpose: Write the books List as an XML file.
-             * 
-             * Author: N. S. Clerman, 14-Jul-2017
-             * 
-             * Revisions
-             * =========
-             * 1) N. S. Clerman, 15-Jul-2017: Add some exception handling.
-             *    Remove some debugging code.
-             * 
-             * Note: This code was taken from the following book:
-             *       "C#7 and .NET Core: Modern Cross-Platform Development"
-             *       Mark J. Price, Second Edition, Packt> Publishing 2017.
-             */
             /* 
-             * 1) establish a filestream on which to write the XML file 
-             *    containing the books list.
-             * 2) create the serializer object and serialize the list to the file.
-             * 3) close the stream to release the file lock.
+             * 1) create the serializer object and serialize the list to the file.
+             * 2) use a filestream on which to write the XML file containing
+             *    the books list.
             */
 
             try
@@ -182,5 +160,79 @@ namespace cardCatalog
                 Environment.Exit(1);
             }
         } // Save
+
+        /// <summary>
+        /// Purpose: List the books on the screen.
+        /// 
+        /// Programmers: W. Victores, N. S. Clerman
+        /// 
+        /// Note: This code used to be part of the Main method. On 21-Jul-2017
+        ///       it was completely rewritten and made a separate method.
+        /// </summary>
+        public static void ListBooks()
+        {
+            // common format string
+            const string listFormat = "{0,1}{1,-20}{0,1}{2,-30}{0,1}{3,-11}{0,1}{4,8}";
+
+            WriteLine("Catalog");
+            WriteLine("=======");
+            WriteLine();
+            WriteLine("{0,67}{1}", ' ', "Year");
+            WriteLine(listFormat, ' ', "Author", "Title", "ISBN", "Published");
+            WriteLine(listFormat, ' ', "------", "-----", "----", "---------");
+            string bookInfo = "";
+            string[] pairs = new string[Book.NO_OF_PROPS];
+            Dictionary<string, string> propValues =
+                new Dictionary<string, string>();
+            string[] key_value = new string[2];
+            foreach (Book book in books)
+            {
+                bookInfo = "";
+                bookInfo = book.ToString();
+                pairs = bookInfo.Split(',');
+                foreach (string pair in pairs)
+                {
+                    key_value = pair.Split(':');
+                    propValues.Add(key_value[0], key_value[1]);
+                }
+                WriteLine(listFormat, ' ',
+                    propValues[Book.PROP_NAMES[1]] + ' ' +
+                    propValues[Book.PROP_NAMES[0]],
+                    propValues[Book.PROP_NAMES[2]],
+                    propValues[Book.PROP_NAMES[3]],
+                    propValues[Book.PROP_NAMES[4]]);
+                propValues.Clear();
+            } // loop over books
+            WriteLine();
+        } // ListBooks
+
+        /// <summary>
+        /// Purpose: Add a book to the card catalog.
+        /// 
+        /// Programmers: W. Victores, N. S. Clerman,
+        /// 
+        /// Revisions
+        /// =========
+        /// 1) N. S. Clerman, 21-Jul-2017: The code was broken out as a separate
+        ///    static method.
+        /// </summary>
+        public static void AddABook()
+        {
+            WriteLine("Enter the book information");
+            Write("Author's last name: ");
+            string lName = ReadLine();
+            Write("Author's first name: ");
+            string fName = ReadLine();
+            Write("Title: ");
+            string tit = ReadLine();
+            Write("ISBN: ");
+            string number = ReadLine();
+            Write("Year published: ");
+            string year = ReadLine();
+
+            Book nextBook = new Book(lName, fName, tit, number,
+                year);
+            books.Add(nextBook);
+        }
     }
 }
